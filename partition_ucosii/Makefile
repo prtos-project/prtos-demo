@@ -1,5 +1,5 @@
 # XAL_PATH: path to the PRTOS directory
-XAL_PATH=/path/to/prtos-sdk/xal
+XAL_PATH=/home/prtos/prtos-sdk/xal
 
 
 all: container.bin resident_sw
@@ -41,14 +41,8 @@ run.x86:
 	@qemu -m 512 -cdrom resident_sw.iso -serial stdio -boot d -smp 4  # Create qemu simulation platform with 4 CPU enabled,
 	                                                                  # so that PRTOS up/smp are supported.
 
-run: run.$(ARCH)
-	
-.PHONY: run run.$(ARCH)
-
-
-
 uclean:
 	@$(RM) $(PARTITIONS) $(patsubst %.bin,%, $(PARTITIONS)) $(patsubst %.xef,%, $(PARTITIONS))  $(os_core_sources) $(os_platform_objs_c) $(os_platform_objs_s)
 	@$(RM) container.bin resident_sw prtos_cf prtos_cf.bin prtos_cf.*.prtosc
 	@$(RM) *.o *.*.prtosc dep.mk 
-	@$(RM) *.iso	
+	@$(RM) *.iso

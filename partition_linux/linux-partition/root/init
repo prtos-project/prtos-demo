@@ -1,0 +1,43 @@
+#!/bin/sh
+
+
+#Mount things needed by this script
+busybox mount -t proc proc /proc
+busybox mount -t sysfs sysfs /sys
+
+#Disable kernel messages from popping onto the screen
+echo 0 > /proc/sys/kernel/printk
+
+#Clear the screen
+busybox clear
+
+#Create all the symlinks to /bin/busybox
+busybox --install -s
+
+#Create device nodes
+mknod /dev/null c 1 3
+mknod /dev/tty c 5 0
+mdev -s
+
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+
+#Modprobe modules
+grep '^[^#]' /etc/modules |
+while read module args
+do
+    [ "$module" ] || continue
+    modprobe $module $args || :
+done
+mdev -s
+
+#Function for parsing command line options with "=" in them
+# get_opt("init=/sbin/init") will return "/sbin/init"
+get_opt() {
+	echo "$@" | cut -d "=" -f 2
+}
+
+#Defaults
+init="/sbin/init"
+
+exec /bin/busybox init $*

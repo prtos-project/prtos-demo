@@ -16,6 +16,7 @@
         </ProcessorTable>
         <Devices>
             <Uart id="0" baudRate="115200" name="Uart" />
+            <Vga name="Vga" />
         </Devices>
     </HwDescription>
 
@@ -29,7 +30,7 @@
                 <Area start="0x6000000" size="1MB" mappedAt="0x6000000"/>
             </PhysicalMemoryAreas>
         </Partition>
-        <Partition id="1" name="Partition2" flags="system" console="Uart">
+        <Partition id="1" name="Partition2" flags="system" console="Vga">
             <PhysicalMemoryAreas>
                 <Area start="0x6100000" size="1MB" mappedAt="0x6100000" />
             </PhysicalMemoryAreas>

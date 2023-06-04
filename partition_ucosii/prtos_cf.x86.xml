@@ -1,4 +1,4 @@
-<SystemDescription xmlns="http://www.prtos.org/prtos-1.x" version="1.0.0" name="timers">
+<SystemDescription xmlns="http://www.prtos.org/prtos-1.x" version="1.0.0" name="partition_ucosii">
 
     <HwDescription>
         <MemoryLayout>

@@ -1,7 +1,7 @@
-#include <irqs.h>   // virtual irq services provided by the libxal library
+#include <irqs.h>   // virtual irq services provided by the libbail library
 #include <prtos.h>  // hypercall services provided by the libprtos library
-#include <stdio.h>  // stdio services provided by the libxal library
-#include <string.h> // string services provided by the libxal library
+#include <stdio.h>  // stdio services provided by the libbail library
+#include <string.h> // string services provided by the libbail library
 
 #include "os_sources/includes.h"
 
@@ -24,17 +24,17 @@ OS_STK AppTask1Stk[APP_TASK_1_STK_SIZE];
     printf(__VA_ARGS__);                                                       \
   } while (0)
 
-void HwTimerHandler(trapCtxt_t *ctxt) { /* XAL trap API */
+void HwTimerHandler(trap_ctxt_t *ctxt) { /* XAL trap API */
   OSTickISR();
 }
 
 void TimerKicker() {
-  prtosTime_t hwClock, execClock;
+  prtos_time_t hwClock, execClock;
 
-  InstallTrapHandler(XAL_PRTOSEXT_TRAP(PRTOS_VT_EXT_HW_TIMER),
+  install_trap_handler(BAIL_PRTOSEXT_TRAP(PRTOS_VT_EXT_HW_TIMER),
                      HwTimerHandler); /* Install timer handler */
 
-  HwSti();                                              /* Enable irqs */
+  hw_sti();                                              /* Enable irqs */
   prtos_clear_irqmask(0, (1 << PRTOS_VT_EXT_HW_TIMER)); /* Unmask timer irqs */
 
   prtos_get_time(PRTOS_HW_CLOCK, &hwClock);     /* Read hardware clock */
@@ -82,7 +82,7 @@ static void AppTask1(void *pdata) {
   }
 }
 
-void PartitionMain(void) {
+void partition_main(void) {
 
   OSInit();
   OSTaskCreateExt(KernelStart, (void *)0,

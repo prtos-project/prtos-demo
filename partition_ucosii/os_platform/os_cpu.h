@@ -133,8 +133,8 @@ typedef volatile unsigned int   OS_CPU_SR;                /* Define size of CPU 
 */
 #define    OS_CRITICAL_METHOD    1
                                                   
-#define OS_ENTER_CRITICAL()  HwCli()
-#define OS_EXIT_CRITICAL()   HwSti()
+#define OS_ENTER_CRITICAL()  hw_cli()
+#define OS_EXIT_CRITICAL()   hw_sti()
 
 
 #define OS_STK_GROWTH       1         /* Stack grows from HIGH to LOW memory on X86*/

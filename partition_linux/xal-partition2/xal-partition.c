@@ -50,7 +50,7 @@ int Proc1(void) {
   return 0;
 }
 
-void PartitionMain(void) {
+void partition_main(void) {
   PRINTF("Receiver Partition.\n");
 
   PRINTF("Initialisation completed\n");

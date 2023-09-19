@@ -18,8 +18,8 @@ os_platform_objs_s    = $(os_platform_dir)/os_cpu_a.o
 # XMLCF: path to the XML configuration file
 XMLCF=prtos_cf.$(ARCH).xml
 
-# PARTITIONS: partition files (xef format) composing the example
-PARTITIONS=partition0.xef partition1.xef
+# PARTITIONS: partition files (pef format) composing the example
+PARTITIONS=partition0.pef partition1.pef
 
 partition0: partition_ucosii.o $(os_core_sources) $(os_platform_objs_c) $(os_platform_objs_s)
 	$(TARGET_LD) -o $@ $^ $(TARGET_LDFLAGS) -Ttext=$(shell $(XPATHSTART) 0 $(XMLCF))
@@ -27,12 +27,12 @@ partition0: partition_ucosii.o $(os_core_sources) $(os_platform_objs_c) $(os_pla
 partition1: partition_ucosii.o $(os_core_sources) $(os_platform_objs_c) $(os_platform_objs_s)
 	$(TARGET_LD) -o $@ $^ $(TARGET_LDFLAGS) -Ttext=$(shell $(XPATHSTART) 1 $(XMLCF))
 
-PACK_ARGS=-h $(PRTOS_CORE):prtos_cf.xef.prtos_conf \
-	-p 0:partition0.xef \
-	-p 1:partition1.xef
+PACK_ARGS=-h $(PRTOS_CORE):prtos_cf.pef.prtos_conf \
+	-p 0:partition0.pef \
+	-p 1:partition1.pef
 	
-container.bin: $(PARTITIONS) prtos_cf.xef.prtos_conf
-	$(PRTOS_PACK) check prtos_cf.xef.prtos_conf $(PACK_ARGS)
+container.bin: $(PARTITIONS) prtos_cf.pef.prtos_conf
+	$(PRTOS_PACK) check prtos_cf.pef.prtos_conf $(PACK_ARGS)
 	$(PRTOS_PACK) build $(PACK_ARGS) $@
 
 run.x86:
@@ -42,7 +42,7 @@ run.x86:
 	                                                                  # so that PRTOS up/smp are supported.
 
 uclean:
-	@$(RM) $(PARTITIONS) $(patsubst %.bin,%, $(PARTITIONS)) $(patsubst %.xef,%, $(PARTITIONS))  $(os_core_sources) $(os_platform_objs_c) $(os_platform_objs_s)
+	@$(RM) $(PARTITIONS) $(patsubst %.bin,%, $(PARTITIONS)) $(patsubst %.pef,%, $(PARTITIONS))  $(os_core_sources) $(os_platform_objs_c) $(os_platform_objs_s)
 	@$(RM) container.bin resident_sw prtos_cf prtos_cf.bin prtos_cf.*.prtos_conf
 	@$(RM) *.o *.*.prtos_conf dep.mk
 	@$(RM) *.iso

@@ -1,8 +1,8 @@
 INTEGRATION=integration-project
 PARTITIONS=\
 	linux-partition\
-	xal-partition1\
-	xal-partition2\
+	bail-partition1\
+	bail-partition2\
 
 	
 ifndef V
@@ -32,9 +32,9 @@ run.x86:
 pclean clean:
 	@for dir in $(PARTITIONS) ; do \
 		$(MAKE) -C $$dir $(MAKECMDGOALS); \
-		$(RM) $$dir/*.xef; \
+		$(RM) $$dir/*.pef; \
 	done
 	@$(MAKE) -C ${INTEGRATION} ${MAKECMDGOALS}
-	@$(RM) ${INTEGRATION}/*.xef ${INTEGRATION}/resident_sw* resident_sw*
+	@$(RM) ${INTEGRATION}/*.pef ${INTEGRATION}/resident_sw* resident_sw*
 	@$(RM) *.iso
 

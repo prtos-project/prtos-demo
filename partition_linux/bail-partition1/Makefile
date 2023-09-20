@@ -1,18 +1,19 @@
-PARTITIONS=xal-partition2.xef
-# XAL_PATH: path to the XAL directory
-XAL_PATH=/home/prtos/prtos-sdk/xal
-ID=3
+PARTITIONS=bail-partition1.pef
+# BAIL_PATH: path to the BAIL directory
+BAIL_PATH=/home/prtos/prtos-sdk/bail
+
+ID=2
 # XMLCF: path to the XML configuration file
 PRTOS_CF=../prtos_cf.xml
 
 all: ${PARTITIONS}
-include $(XAL_PATH)/common/rules.mk
+include $(BAIL_PATH)/common/rules.mk
 
-xal-partition2: xal-partition.o
+bail-partition1: bail-partition.o
 	$(TARGET_LD) -o $@ $^ $(TARGET_LDFLAGS) -Ttext=$(call xpathstart,${ID},$(PRTOS_CF))
 
 pclean: clean
-	@$(RM) -f dep.mk *.o *.a *.xef *~ *.bin *partition *.bin.xmc *.c.xmc *.xmc xm_cf resident_sw *.o.lcfg
+	@$(RM) -f dep.mk *.o *.a *.pef *~ *.bin *.xmc xm_cf resident_sw
 	@find -name "*~" -exec rm '{}' \;
 	@find -name "*.o" -exec rm '{}' \;
 	@find -name "dep.mk" -exec rm '{}' \;

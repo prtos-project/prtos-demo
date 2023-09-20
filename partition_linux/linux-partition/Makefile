@@ -6,7 +6,7 @@ CMDLINE=cmdline
 include $(LINUX_PATH)/common/rules.mk
 
 PRTOS_CF=../prtos_cf.xml
-all: $(PARTITION).xef $(CMDLINE).xef
+all: $(PARTITION).pef $(CMDLINE).pef
 
 cmd=$(BUILD_LINUX) -r root -a $(shell $(XPATHSTART) $(ID) $(PRTOS_CF)) -o $@ #$(LINUX_PATH)/vmlinux
 addr=$(XPATHSTART) $(ID) $(PRTOS_CF)
@@ -15,8 +15,8 @@ $(PARTITION):
 	echo $(addr)
 	$(BUILD_LINUX) -r root -a $(shell $(XPATHSTART) $(ID) $(PRTOS_CF)) -o $@ $(LINUX_PATH)/vmlinux
 
-$(CMDLINE).xef: $(CMDLINE)
-	$(XEF) -m -o $@ $<
+$(CMDLINE).pef: $(CMDLINE)
+	$(PEF) -m -o $@ $<
 
 pclean: clean
 	$(RM) -f $(PARTITION)*

@@ -24,23 +24,19 @@ OS_STK AppTask1Stk[APP_TASK_1_STK_SIZE];
     printf(__VA_ARGS__);                                                       \
   } while (0)
 
-void HwTimerHandler(trap_ctxt_t *ctxt) { /* XAL trap API */
-  OSTickISR();
-}
+void HwTimerHandler(trap_ctxt_t *ctxt) { OSTickISR(); }
 
 void TimerKicker() {
   prtos_time_t hwClock, execClock;
 
   install_trap_handler(BAIL_PRTOSEXT_TRAP(PRTOS_VT_EXT_HW_TIMER),
-                     HwTimerHandler); /* Install timer handler */
+                       HwTimerHandler); /* Install timer handler */
 
-  hw_sti();                                              /* Enable irqs */
+  hw_sti();                                             /* Enable irqs */
   prtos_clear_irqmask(0, (1 << PRTOS_VT_EXT_HW_TIMER)); /* Unmask timer irqs */
 
-  prtos_get_time(PRTOS_HW_CLOCK, &hwClock);     /* Read hardware clock */
-  prtos_get_time(PRTOS_EXEC_CLOCK, &execClock); /* Read execution clock */
+  prtos_get_time(PRTOS_HW_CLOCK, &hwClock); /* Read hardware clock */
 
-  PRINT("Setting HW timer at 1 sec period\n");
   prtos_set_timer(PRTOS_HW_CLOCK, hwClock + 1000000LL,
                   1000000LL); /* Set hardware time driven timer */
 }
@@ -49,7 +45,6 @@ static void KernelStart(void *pdata) {
 #if OS_CRITICAL_METHOD == 3
   OS_CPU_SR cpu_sr;
 #endif
-  PRINT("KernelStart\n");
   pdata = pdata;
 
   TimerKicker();

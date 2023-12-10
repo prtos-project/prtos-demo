@@ -303,7 +303,6 @@ INT8U  OSTaskCreateExt (void   (*task)(void *pd),
             OSTaskCtr++;                                       /* Increment the #tasks counter         */
             OS_EXIT_CRITICAL();
             if (OSRunning == TRUE) {                           /* Find HPT if multitasking has started */
-							  printf("OS_Sched %d \n", prio);
                 OS_Sched();
             }
         } else {

@@ -177,18 +177,16 @@ OS_STK *OSTaskStkInit(void (*task)(void *pd), void *pdata, OS_STK *ptos, INT16U 
     /* are congruent with the Stack Frame definitions in OS_CPU_A.s  */
     /*****************************************************************/
     /* to improve debugging, fill all registers with the mame */
-    stkp->ebx = 0x66666666L;     /* R31 */
-    stkp->ecx = 0x55555555L;     /* R30 */
-    stkp->edx = 0x44444444L;     /* R29 */
-    stkp->esi = 0x33333333L;     /* R28 */
-    stkp->edi = 0x22222222L;     /* R27 */
-    stkp->ebp = 0x11111111L;     /* R26 */
-    stkp->eax = 0x00000000L;     /* R25 */
-    stkp->lret_eip = task;       /* R24 */
-    stkp->lret_cs = 38 << 3 | 1; /* R23 */
-    stkp->iflags = 0x0;          /* R22 */
-    stkp->eip = task;            /* R21 */
-    stkp->cs = 38 << 3 | 1;      /* R20 */
+    stkp->ebx = 0x66666666L;     /* EBX */
+    stkp->ecx = 0x55555555L;     /* ECX */
+    stkp->edx = 0x44444444L;     /* EDX */
+    stkp->esi = 0x33333333L;     /* ESI */
+    stkp->edi = 0x22222222L;     /* EDI */
+    stkp->ebp = 0x11111111L;     /* EBP */
+    stkp->eax = 0x00000000L;     /* EAX */
+    stkp->lret_eip = task;       /* RET ADDR*/
+    stkp->iflags = 0x0;          /* IFLAGS*/
+    stkp->eip = task;            /* PC*/
 
 #if (OS_SAVE_CONTEXT_WITH_FPRS == 1)
 /*Not accouting FPRS*/

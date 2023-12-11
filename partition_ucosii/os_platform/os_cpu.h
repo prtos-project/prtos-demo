@@ -149,13 +149,9 @@ typedef struct stk_tag
   INT32U ebp;
   INT32U eax;
   INT32U lret_eip;
-  INT32U lret_cs;
   INT32U iflags;
   INT32U eip;
-  INT32U cs;
-  INT32U eflags;
   INT32U esp;
-  INT32U ss;
 #if (OS_SAVE_CONTEXT_WITH_FPRS == 1)
 /*Not accounting FPRS*/
 #endif
